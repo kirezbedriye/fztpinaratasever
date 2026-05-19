@@ -914,20 +914,20 @@
       <div class="form-row">
         <div class="form-group">
           <label>Ad</label>
-          <input type="text" placeholder="Adınız">
+          <input type="text" id="ad" placeholder="Adınız">
         </div>
         <div class="form-group">
           <label>Soyad</label>
-          <input type="text" placeholder="Soyadınız">
+          <input type="text" id="soyad" placeholder="Soyadınız">
         </div>
       </div>
       <div class="form-group">
         <label>Telefon</label>
-        <input type="tel" placeholder="0555 000 00 00">
+        <input type="tel" id="telefon" placeholder="0555 000 00 00">
       </div>
       <div class="form-group">
         <label>Hizmet</label>
-        <select>
+        <select  id="hizmet">
           <option value="">Seçiniz...</option>
           <option>Fizik Tedavi & Rehabilitasyon</option>
           <option>Manuel Terapi</option>
@@ -939,9 +939,10 @@
       </div>
       <div class="form-group">
         <label>Mesajınız</label>
-        <textarea placeholder="Şikayetinizi veya sorunuzu kısaca belirtiniz..."></textarea>
+        <textarea id="mesaj" placeholder="Şikayetinizi veya sorunuzu kısaca belirtiniz..."></textarea>
       </div>
-      <button class="submit-btn" onclick="alert('Talebiniz alındı! En kısa sürede sizi arayacağız. 📞')">Randevu Talep Et</button>
+      <!-- <button class="submit-btn" onclick="alert('Talebiniz alındı! En kısa sürede sizi arayacağız. 📞')">Randevu Talep Et</button> -->
+	  <button class="submit-btn" onclick="whatsappGonder()">Randevu Talep Et</button>
     </div>
   </div>
 </section>
@@ -1020,6 +1021,28 @@
       }
     });
   });
+  
+  function whatsappGonder() {
+  const ad = document.getElementById('ad').value.trim();
+  const soyad = document.getElementById('soyad').value.trim();
+  const telefon = document.getElementById('telefon').value.trim();
+  const hizmet = document.getElementById('hizmet').value;
+  const mesaj = document.getElementById('mesaj').value.trim();
+
+  if (!ad || !soyad || !telefon) {
+    alert('Lütfen ad, soyad ve telefon alanlarını doldurunuz.');
+    return;
+  }
+
+  let metin = '🗓 *Randevu Talebi*\n\n';
+  metin += '👤 *Ad Soyad:* ' + ad + ' ' + soyad + '\n';
+  metin += '📞 *Telefon:* ' + telefon + '\n';
+  if (hizmet) metin += '🏥 *Hizmet:* ' + hizmet + '\n';
+  if (mesaj) metin += '💬 *Mesaj:* ' + mesaj + '\n';
+
+  const url = 'https://wa.me/905075446889?text=' + encodeURIComponent(metin);
+  window.open(url, '_blank');
+}
 </script>
 </body>
 </html>
